@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IFrame Example</title>
+    <title>Two-way iframe</title>
   </head>
   <body>
+    <h1 id="title">Iframe ready</h1>
+    <button id="send">Send message to parent</button>
+
     <script>
-      let counter = 0;
+      // 1️⃣ Receive messages from parent
+      window.addEventListener('message', (event) => {
+        console.log('Received from parent:', event.data);
 
-      // Update the body content every second
-      setInterval(function() {
-        counter++;
-        document.body.innerHTML = '<h1>Iframe Tile ' + counter + '</h1>';
-      }, 1000);
-
-      // Listen for messages from the parent window
-      window.addEventListener('message', function(event) {
-        console.log('Content of message from parent:', event.data);
-        // Process the received data here
+        if (event.data?.title) {
+          document.getElementById('title').innerText = event.data.title;
+        }
       });
+
+      // 2️⃣ Send messages to parent
+      document.getElementById('send').addEventListener('click', () => {
+        window.parent.postMessage(
+          { status: 'clicked', time: Date.now() },
+          window.location.origin
+        );
+      });
+
+      // 3️⃣ Notify parent that iframe is ready
+      window.parent.postMessage(
+        { status: 'ready' },
+        window.location.origin
+      );
     </script>
-    <h1>Iframe Tile</h1>
   </body>
 </html>
