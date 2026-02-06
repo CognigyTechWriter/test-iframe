@@ -4,13 +4,21 @@
     <title>IFrame Example</title>
   </head>
   <body>
-    <h1>IFrame Test</h1>
     <script>
+      let counter = 0;
+
+      // Update the body content every second
+      setInterval(function() {
+        counter++;
+        document.body.innerHTML = '<h1>Iframe Tile ' + counter + '</h1>';
+      }, 1000);
+
+      // Listen for messages from the parent window
       window.addEventListener('message', function(event) {
-        console.log('Message received in IFrame:', event.data);
-        document.body.innerHTML += `<p>Received: ${JSON.stringify(event.data)}</p>`;
+        console.log('Content of message from parent:', event.data);
+        // Process the received data here
       });
     </script>
+    <h1>Iframe Tile</h1>
   </body>
 </html>
-
