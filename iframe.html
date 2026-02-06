@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IFrame Example</title>
+  </head>
+  <body>
+    <h1>IFrame Test</h1>
+    <script>
+      window.addEventListener('message', function(event) {
+        console.log('Message received in IFrame:', event.data);
+        document.body.innerHTML += `<p>Received: ${JSON.stringify(event.data)}</p>`;
+      });
+    </script>
+  </body>
+</html>
+
